@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Tutor Dashboard </title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/typicons/typicons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/simple-line-icons/css/simple-line-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+  <link rel="stylesheet" href="{% static 'js/select.dataTables.min.css' %}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+</head>
+<body>
+  <div class="container-scroller"> 
+    <!-- partial:partials/_navbar.html -->
+    {% include 'nav.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        {% include 'sidenav.html' %}
+<!-- partial -->
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="home-tab">
+
+<div class="tab-content tab-content-basic">
+    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="statistics-details d-flex align-items-center justify-content-between">
+                <div>
+                  <p class="statistics-title">Bounce Rate</p>
+                  <h3 class="rate-percentage">32.53%</h3>
+                  <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>-0.5%</span></p>
+                </div>
+                <div>
+                  <p class="statistics-title">Page Views</p>
+                  <h3 class="rate-percentage">7,682</h3>
+                  <p class="text-success d-flex"><i class="mdi mdi-menu-up"></i><span>+0.1%</span></p>
+                </div>
+                <div>
+                  <p class="statistics-title">New Sessions</p>
+                  <h3 class="rate-percentage">68.8</h3>
+                  <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
+                </div>
+                <div class="d-none d-md-block">
+                  <p class="statistics-title">Avg. Time on Site</p>
+                  <h3 class="rate-percentage">2m:35s</h3>
+                  <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                </div>
+                <div class="d-none d-md-block">
+                  <p class="statistics-title">New Sessions</p>
+                  <h3 class="rate-percentage">68.8</h3>
+                  <p class="text-danger d-flex"><i class="mdi mdi-menu-down"></i><span>68.8</span></p>
+                </div>
+                <div class="d-none d-md-block">
+                  <p class="statistics-title">Avg. Time on Site</p>
+                  <h3 class="rate-percentage">2m:35s</h3>
+                  <p class="text-success d-flex"><i class="mdi mdi-menu-down"></i><span>+0.8%</span></p>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+      
+            <div class="col-md-7 grid-margin stretch-card" id="createCourse">
+              <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Courses</h4>
+    <!-- Create and manage courses -->
+    <form class="forms-sample" method="post" action="{% url 'create_course' tutor.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+        <label for="course_title">Course Title:</label>
+        <input type="text" class="form-control" name="title" required>
+        </div>
+
+        <div class="form-group">
+        <label for="course_description">Course Description:</label>
+        <textarea name="description" class="form-control" required></textarea>
+        </div>
+
+        <div class="form-group">
+        <label for="enrollment_capacity">enrollment capacity:</label>
+        <input type="number" class="form-control" name="enrollment_capacity" required>
+        </div>
+        
+        <input type="submit" class="btn btn-primary me-2" value="Create Course">
+    </form>
+
+</div>
+</div>
+</div>
+
+
+
+<div class="col-lg-5 d-flex flex-column">
+    <div class="row flex-grow">
+      <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+        <div class="card bg-primary card-rounded">
+          <div class="card-body pb-0">
+            <h4 class="card-title card-title-dash text-white mb-4">Status Summary</h4>
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="status-summary-ight-white mb-1">Closed Value</p>
+                <h2 class="text-info">357</h2>
+              </div>
+              <div class="col-sm-8">
+                <div class="status-summary-chart-wrapper pb-4">
+                  <canvas id="status-summary"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-12 grid-margin stretch-card">
+        <div class="card card-rounded">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="d-flex justify-content-between align-items-center mb-2 mb-sm-0">
+                  <div class="circle-progress-width">
+                    <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+                  </div>
+                  <div>
+                    <p class="text-small mb-2">Total Visitors</p>
+                    <h4 class="mb-0 fw-bold">26.80%</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="circle-progress-width">
+                    <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+                  </div>
+                  <div>
+                    <p class="text-small mb-2">Visits per day</p>
+                    <h4 class="mb-0 fw-bold">9065</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="col-md-6 grid-margin stretch-card" id="UploadCourseMaterials">
+    <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Upload Course Materials</h4>
+
+        <form method="post" class="forms-sample" action="{% url 'upload_material' tutor.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+            <label for="material_title">Material Title:</label>
+            <input type="text" class="form-control" name="title" required>
+            </div>
+
+            <div class="form-group">
+            <label for="material_content">Material Content:</label>
+            <textarea name="content" class="form-control" required></textarea>
+            </div>
+
+            <div class="form-group">
+            <label for="material_course">Course:</label>
+            <select name="course" class="form-control" required>
+                {% for course in all_courses %}
+                    <option value="{{ course.id }}">{{ course.title }}</option>
+                {% endfor %}
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label for="upload_date">Upload Date:</label>
+            <input type="date" class="form-control"  name="upload_date" required>
+            </div>
+
+            <div class="form-group">
+            <label for="material_document_type">Document Type:</label>
+            <select name="document_type" class="form-control" required>
+                <option value="PDF">PDF</option>
+                <option value="DOC">Word Document</option>
+                <option value="LAB">Lab Report</option>
+            </select>
+            </div>
+
+            <input type="submit" class="btn btn-primary me-2" value="Upload Material">
+        </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-6 grid-margin stretch-card" id="createAssignment">
+    <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Create Assignment</h4>
+
+
+
+        <form method="post" class="forms-sample" action="{% url 'create_assignment' tutor.id %}">
+            {% csrf_token %}
+            
+
+            <!-- Assignment Title -->
+            <div class="form-group">
+            <label for="assignment_title">Assignment Title:</label>
+            <input type="text" class="form-control" name="title" required>
+            </div>
+    
+
+            <!-- Assignment Description -->
+            <div class="form-group">
+            <label for="assignment_description">Assignment Description:</label>
+            <textarea name="description" class="form-control" required></textarea>
+            </div>
+    
+            <!-- Due Date -->
+            <div class="form-group">
+            <label for="due_date">Due Date:</label>
+            <input type="date" class="form-control" name="due_date" required>
+            </div>
+    
+            <!-- Course Selection Dropdown -->
+            <div class="form-group">
+            <label for="assignment_course">Select Course:</label>
+            <select class="form-control" name="course" required>
+                {% for course in all_courses %}
+                    <option value="{{ course.id }}">{{ course.title }}</option>
+                {% endfor %}
+            </select>
+            </div>
+    
+            <!-- Student Selection Dropdown -->
+            <div class="form-group">
+            <label for="assignment_student">Select Student:</label>
+            <select class="form-control" name="student" required>
+                {% for student in all_students %}
+                    <option value="{{ student.id }}">{{ student.username }}</option>
+                {% endfor %}
+            </select>
+            </div>
+    
+            <!-- Submit Button -->
+            <input type="submit" class="btn btn-primary me-2" value="Create Assignment">
+        </form>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-6 grid-margin stretch-card" id="evaluateStudent">
+    <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Evaluate Student</h4>
+
+        <form method="post" class="forms-sample" action="{% url 'evaluate_student' tutor.id %}">
+            {% csrf_token %}
+    
+            <!-- Assignment Selection Dropdown -->
+            <div class="form-group">
+            <label for="assignment">Select Assignment:</label>
+            <select class="form-control" name="assignment" required>
+                {% for assignment in all_assignments %}
+                    <option value="{{ assignment.id }}">{{ assignment.title }}</option>
+                {% endfor %}
+            </select>
+            </div>
+    
+            <!-- Student Selection Dropdown -->
+            <div class="form-group">
+            <label for="student">Select Student:</label>
+            <select class="form-control" name="student" required>
+                {% for student in all_students %}
+                    <option value="{{ student.id }}">{{ student.username }}</option>
+                {% endfor %}
+            </select>
+            </div>
+    
+            <!-- Grade -->
+            <div class="form-group">
+            <label for="grade">Grade:</label>
+            <input type="number" class="form-control" name="grade" step="0.01" required>
+            </div>
+    
+            <!-- Feedback -->
+            <div class="form-group">
+            <label for="feedback">Feedback:</label>
+            <textarea name="feedback" class="form-control" required></textarea>
+            </div>
+    
+            <!-- Submit Button -->
+            <input type="submit" class="btn btn-primary me-2" value="Evaluate Student">
+        </form>
+    
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-3 col-lg-3 grid-margin stretch-card">
+    <div class="card card-rounded">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h4 class="card-title card-title-dash">Activities</h4>
+          <p class="mb-0">20 finished, 5 remaining</p>
+        </div>
+        <ul class="bullet-line-list">
+          <li>
+            <div class="d-flex justify-content-between">
+              <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+              <p>Just now</p>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex justify-content-between">
+              <div><span class="text-light-green">Oliver Noah</span> assign you a task</div>
+              <p>1h</p>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex justify-content-between">
+              <div><span class="text-light-green">Jack William</span> assign you a task</div>
+              <p>1h</p>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex justify-content-between">
+              <div><span class="text-light-green">Leo Lucas</span> assign you a task</div>
+              <p>1h</p>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex justify-content-between">
+              <div><span class="text-light-green">Thomas Henry</span> assign you a task</div>
+              <p>1h</p>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex justify-content-between">
+              <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+              <p>1h</p>
+            </div>
+          </li>
+          <li>
+            <div class="d-flex justify-content-between">
+              <div><span class="text-light-green">Ben Tossell</span> assign you a task</div>
+              <p>1h</p>
+            </div>
+          </li>
+        </ul>
+        <div class="list align-items-center pt-3">
+          <div class="wrapper w-100">
+            <p class="mb-0">
+              <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="col-md-3 col-lg-3 grid-margin stretch-card">
+    <div class="card card-rounded">
+      <div class="card-body card-rounded">
+        <h4 class="card-title  card-title-dash">Recent Events</h4>
+        <div class="list align-items-center border-bottom py-2">
+          <div class="wrapper w-100">
+            <p class="mb-2 font-weight-medium">
+              Change in Directors
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <i class="mdi mdi-calendar text-muted me-1"></i>
+                <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list align-items-center border-bottom py-2">
+          <div class="wrapper w-100">
+            <p class="mb-2 font-weight-medium">
+              Other Events
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <i class="mdi mdi-calendar text-muted me-1"></i>
+                <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list align-items-center border-bottom py-2">
+          <div class="wrapper w-100">
+            <p class="mb-2 font-weight-medium">
+              Quarterly Report
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <i class="mdi mdi-calendar text-muted me-1"></i>
+                <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="list align-items-center border-bottom py-2">
+          <div class="wrapper w-100">
+            <p class="mb-2 font-weight-medium">
+              Change in Directors
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <i class="mdi mdi-calendar text-muted me-1"></i>
+                <p class="mb-0 text-small text-muted">Mar 14, 2019</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="list align-items-center pt-3">
+          <div class="wrapper w-100">
+            <p class="mb-0">
+              <a href="#" class="fw-bold text-primary">Show all <i class="mdi mdi-arrow-right ms-2"></i></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<div class="col-md-6 grid-margin stretch-card" id="markStudentAbsent">
+    <div class="card">
+      <div class="card-body">
+          <h4 class="card-title">Mark Student Absent</h4>
+
+<!-- Mark Absent Students -->
+<button type="submit" class="btn btn-primary me-2" id="markAbsentButton">Mark Absent Students</button>
+
+</div>
+</div>
+</div>
+
+
+        </div>
+
+
+        
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>  
+    </div>
+</div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#markAbsentButton').click(function () {
+                // Make an AJAX request to the server to initiate the voice call
+                $.ajax({
+                    url: '{% url "mark_absent_students" tutor.id %}',
+                    method: 'POST',
+                    success: function (data) {
+                        // Handle success, e.g., display a success message
+                        alert(data.message);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error, e.g., display an error message
+                        alert('Failed to initiate voice call');
+                    }
+                });
+            });
+        });
+    </script>
+
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+  <script src="{% static 'vendors/progressbar.js/progressbar.min.js' %}"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
+  <script src="{% static 'js/todolist.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/dashboard.js' %}"></script>
+  <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
+  <!-- End custom js for this page-->
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+    
+        <!-- Username -->
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+    
+        <!-- Password -->
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+    
+        <!-- Email -->
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+    
+        <!-- Role -->
+        <label for="role">Role:</label>
+        <select name="role" required>
+            <option value="Student">Student</option>
+            <option value="Tutor">Tutor</option>
+            <option value="Administrator">Administrator</option>
+        </select>
+    
+    
+        <!-- Submit Button -->
+        <input type="submit" value="Sign Up">
+        <a href="{% url 'login' %}">Already I Have Account</a>
+    </form>
+
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h2>User List</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Role</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Date_Joined</th>
+                <!-- Add more table headers based on your User model fields -->
+                <!-- Example: <th>Field Name</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in all_users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.date_joined}}</td>
+                    <!-- Add more table cells based on your User model fields -->
+                    <!-- Example: <td>{{ user.field_name }}</td> -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h2>Submissions Monitor</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Student_ID</th>
+            <th>Submission_content</th>
+            <th>Submission_date</th>
+            <th>Assignement_Submitted</th>
+            <!-- Add more table headers based on your model fields -->
+            <!-- Example: <th>Field Name</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for submission in all_submissions %}
+            <tr>
+                <td>{{ submission.student }}</td>
+                <td>{{ submission.submission_content }}</td>
+                <td>{{ submission.submission_date}}</td>
+                <td>{{ submission.assignement}}</td>
+
+
+                <!-- Add more table cells based on your model fields -->
+                <!-- Example: <td>{{ enrollment.field_name }}</td> -->
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <h2>Interaction History Monitor</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Material</th>
+                <th>Course</th>
+                <th>Type</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for interaction_history in all_interactions %}
+            <tr>
+                <td>{{ interaction_history.student.username }}</td>
+                <td>{{ interaction_history.material.title }}</td>
+                <td>{{ interaction_history.course.title }}</td>
+                <td>{{ interaction_history.interaction_type }}</td>
+                <td>{{ interaction_history.interaction_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Enrollments Monitor</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student Name</th>
+            <th>enrollement_date</th>
+
+            <!-- Add more table headers based on your model fields -->
+            <!-- Example: <th>Field Name</th> -->
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for enrollment in all_enrollments %}
+            <tr>
+                <td>{{ enrollment.id }}</td>
+                <td>{{ enrollment.course }}</td>
+                <td>{{ enrollment.enrollment_date}}</td>
+
+                <!-- Add more table cells based on your model fields -->
+                <!-- Example: <td>{{ enrollment.field_name }}</td> -->
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+    
+
+
+<h2>Delete User</h2>
+
+    <form method="post" action="{% url 'user_delete' admin.pk %}">
+        {% csrf_token %}
+        <label for="email">User Email:</label>
+        <input type="email" name="email" required>
+        <input type="submit" value="Delete User">
+    </form>
+
+
+
+    <h1>Edit User</h1>
+
+    <form method="post" action="{% url 'user_edit' admin.pk %}">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" value="{{ user.username }}" required><br>
+    
+        <label for="email">Email:</label>
+        <input type="email" name="email" value="{{ user.email }}" required><br>
+    
+        <label for="role">Role:</label>
+        <select name="role">
+            <option value="Student" {% if user.role == 'Student' %}selected{% endif %}>Student</option>
+            <option value="Tutor" {% if user.role == 'Tutor' %}selected{% endif %}>Tutor</option>
+            <option value="Administrator" {% if user.role == 'Administrator' %}selected{% endif %}>Administrator</option>
+        </select><br>
+    
+    
+        <button type="submit">Save Changes</button>
+    </form>    
+
+
+
+    <h2>Manage Grade</h2>
+
+
+
+    <!-- Form for updating a specific grade -->
+    <form method="post" action="{% url 'manage_grade' admin.id %}">
+        {% csrf_token %}
+
+        <label for="student">Student ID:</label>
+        <input type="number" name="student" id="student" required>
+
+        <label for="assignment">Assignment ID:</label>
+        <input type="number" name="assignment" id="assignment" required>
+
+
+        <label for="grade">Grade:</label>
+        <input type="number" name="grade" required>
+
+        <input type="submit" value="Update Grade">
+    </form>
+
+    
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Student Dashboard </title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/typicons/typicons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/simple-line-icons/css/simple-line-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+  <link rel="stylesheet" href="{% static 'js/select.dataTables.min.css' %}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+</head>
+<body>
+<div class="container-scroller"> 
+    <!-- partial:partials/_navbar.html -->
+    {% include 'nav.html' %}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+    <!-- partial:partials/_settings-panel.html -->
+    {% include 'sidenav.html' %}
+
+
+
+
+<div class="main-panel">        
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-md-6 grid-margin stretch-card" id="enroll_course">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Enroll Course Form for {{ student.username }}</h4>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            <form class="forms-sample" method="post" action="{% url 'enroll_course' student.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="form-group">
+              <label for="course">Select Course :</label>
+              <select class="form-control" name="course" required>
+                {% for course in all_courses %}
+                  <option value="{{ course.id }}">{{ course.title }}</option>
+                {% endfor %}
+              </select>
+              </div>
+              <div class="form-group">
+              <label for="Student">Select Student:</label>
+              <select class="form-control" name="student" required>
+                <option value="{{ student.id }}">{{ student.username }}</option>
+              </select>
+              </div>
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" class="btn btn-primary me-2" value="Enroll Course">
+              </div>
+            </form>
+          </div>
+      </div>
+      </div>
+      <div class="col-md-6 grid-margin stretch-card" id="post_interaction_history">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Post interaction history for {{ student.username }}</h4>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            <form class="forms-sample"  method="post"
+            action="{% url 'post_interaction_history' student.id %}"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="interaction_type">Interaction Type :</label>
+              <input type="text" class="form-control" id="interaction_type" placeholder="Interaction Type" name="interaction_type" required>
+            </div>
+              <div class="form-group">
+                <label for="course">Select Course :</label>
+                <select class="form-control" name="course" required>
+                  {% for course in all_courses %}
+                    <option value="{{ course.id }}">{{ course.title }}</option>
+                  {% endfor %}
+                </select>
+                </div>
+              <div class="form-group">
+                <label for="material">Select Material:</label>
+                <select class="form-control" name="material" required>
+                  {% for material in all_materials %}
+                  <option value="{{ material.id }}">{{ material.title}}</option>
+                  {% endfor %}
+                </select>
+                </div>
+                <div class="form-group">
+                  <label for="student">Select Student:</label>
+                  <select class="form-control" name="student" required>
+                    <option value="{{ student.id }}">{{ student.username }}</option>
+                  </select>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <input type="submit" class="btn btn-primary me-2" value="Post Interaction">
+                </div>
+                  
+            </form>
+          </div>
+      </div>
+      </div>
+      <div class="col-md-6 grid-margin stretch-card" id="save_reading_state">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Save reading state for {{ student.username }}</h4>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            <form class="forms-sample"  method="post"
+            action="{% url 'save_reading_state' student.id %}"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="form-group">
+                <label for="read_state">Reading state :</label>
+                <input type="Number" class="form-control" id="read_state" placeholder="Save reading" name="read_state" required>
+              </div>
+              <div class="form-group">
+                <label for="material">Select Material:</label>
+                <select class="form-control" name="material" required>
+                  {% for material in all_materials %}
+                  <option value="{{ material.id }}">{{ material.title}}</option>
+                  {% endfor %}
+                </select>
+                </div>
+                <div class="form-group">
+                  <label for="student">Select Student:</label>
+                  <select class="form-control" name="student" required>
+                    <option value="{{ student.id }}">{{ student.username }}</option>
+                  </select>
+                </div>
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" class="btn btn-primary me-2" value="Save State">
+              </div>
+            </form>
+          </div>
+      </div>
+      </div>
+      <div class="col-md-6 grid-margin stretch-card" id="submit_assignment">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Submit Assignment for {{ student.username }}</h4>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+            <form class="forms-sample"  method="post"
+            action="{% url 'submit_assignment' student.id %}"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="form-group">
+                <label for="submission_content">Submition Content :</label>
+                <input type="text" class="form-control" id="submission_content" placeholder="Submission Content" name="submission_content" required>
+              </div>
+                <div class="form-group">
+                  <label for="student">Select Student:</label>
+                  <select class="form-control" name="student" required>
+                    <option value="{{ student.id }}">{{ student.username }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="assignment">Select Assignment:</label>
+                  <select class="form-control" name="assignment" required>
+                    {% for assignment in all_assignments %}
+                    <option value="{{ assignment.id }}">{{ assignment.title}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <input type="submit" class="btn btn-primary me-2" value="Submit">
+              </div>
+            </form>
+          </div>
+      </div>
+      </div>
+      <div class="col-md-12 grid-margin stretch-card">
+        <div class="card card-rounded">
+          <div class="card-body">
+            <div class="d-sm-flex justify-content-between align-items-start">
+              <div>
+                <h4 class="card-title card-title-dash">Academic Year</h4>
+              </div>
+            </div>
+            
+            <div class="d-sm-flex align-items-center mt-1 justify-content-between">
+              <div class="d-sm-flex align-items-center mt-4 justify-content-between"><h2 class="me-2 fw-bold">$36,2531.00</h2><h4 class="me-2">USD</h4><h4 class="text-success">(+1.37%)</h4></div>
+              <div class="me-3"><div id="marketing-overview-legend"></div></div>
+            </div>
+            <div class="chartjs-bar-wrapper mt-3">
+              <canvas id="marketingOverview"></canvas>
+          
+          </div>
+        </div>
+      </div>
+        
+
+
+      
+      </div>
+  
+      <div class="col-md-6 grid-margin stretch-card" id="enrolled_courses">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Enrolled Course for {{ student.username }}</h4>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Course Title</th>
+                    <th>Enrollement Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for Enrollment in all_enrollments %}
+                  <tr>
+                    <td>{{ Enrollment.course.title}}</td>
+                    <td>{{ Enrollment.enrollment_date}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 grid-margin stretch-card" id="view_grades">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Grades for {{ student.username }}</h4>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Assignment</th>
+                    <th>Grade</th>
+                    <th>Feedback</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for grade in all_grades%}
+                  <tr>
+                    <td>{{ grade.student}}</td>
+                    <td>{{ grade.assignment.title}}</td>
+                    <td>{{ grade.grade}}</td>
+                    <td>{{ grade.feedback}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 grid-margin stretch-card" id="list_course_materials">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Material Course for {{ student.username }}</h4>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Course</th>
+                    <th>Upload date</th>
+                    <th>Document type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for Material in all_materials %}
+        <tr>
+          <td>{{ Material.title}}</td>
+          <td>{{ Material.content}}</td>
+          <td>{{ Material.course.title}}</td>
+          <td>{{ Material.upload_date}}</td>
+          <td>{{ Material.document_type}}</td>
+        </tr>
+        {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+        <div class="card card-rounded">
+          <div class="card-body">
+            <div class="d-sm-flex justify-content-between align-items-start">
+              <div>
+              <h4 class="card-title card-title-dash">Performance This Week</h4>
+              </div>
+              <div id="performance-line-legend"></div>
+            </div>
+            <div class="chartjs-wrapper mt-5">
+              <canvas id="performaneLine"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 grid-margin stretch-card" id="track_interaction_history">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Interaction History for {{ student.username }}</h4>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <th>Student</th>
+                  <th>Material</th>
+                  <th>Course</th>
+                  <th>Interaction Type</th>
+                  <th>Interaction Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for interaction in all_interactions %}
+        <tr>
+          <td>{{ interaction.student.username}}</td>
+          <td>{{ interaction.material.title}}</td>
+          <td>{{ interaction.course.title}}</td>
+          <td>{{ interaction.interaction_type}}</td>
+          <td>{{ interaction.interaction_date}}</td>
+        </tr>
+        {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+  
+
+
+  <!-- plugins:js -->
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+  <script src="{% static 'vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+  <script src="{% static 'vendors/progressbar.js/progressbar.min.js' %}"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
+  <script src="{% static 'js/todolist.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/dashboard.js' %}"></script>
+  <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
+  <!-- End custom js for this page-->
+  </body>
+</html>
